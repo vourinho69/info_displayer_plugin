@@ -11,6 +11,9 @@ public interface LocationInfoConfig extends Config
 	String GROUP = "location-info";
 	// The explicit key is also used by the one-time legacy preference migration.
 	String CAMERA_ZOOM_KEY = "cameraZoom";
+	// This differs from the old cameraZ key, which previous versions used for
+	// the zoom preference and which is migrated during plugin startup.
+	String CAMERA_POSITION_Z_KEY = "cameraPositionZ";
 
 	// Each default method represents one setting in RuneLite's plugin panel.
 	@ConfigItem(keyName = "names", name = "Names", description = "Show labels next to coordinate values")
@@ -39,6 +42,24 @@ public interface LocationInfoConfig extends Config
 
 	@ConfigItem(keyName = "playerZ", name = "Player Z", description = "Show the player's world plane (Z coordinate)")
 	default boolean playerZ()
+	{
+		return true;
+	}
+
+	@ConfigItem(keyName = "cameraX", name = "Camera X", description = "Show the camera X position")
+	default boolean cameraX()
+	{
+		return true;
+	}
+
+	@ConfigItem(keyName = "cameraY", name = "Camera Y", description = "Show the camera Y position")
+	default boolean cameraY()
+	{
+		return true;
+	}
+
+	@ConfigItem(keyName = CAMERA_POSITION_Z_KEY, name = "Camera Z", description = "Show the camera Z position")
+	default boolean cameraZ()
 	{
 		return true;
 	}

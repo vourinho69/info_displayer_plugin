@@ -82,6 +82,18 @@ public class LocationInfoOverlay extends OverlayPanel
 		{
 			addLine("Player Z", location.getPlane());
 		}
+		if (config.addAll() || config.cameraX())
+		{
+			addLine("Camera X", client.getCameraX());
+		}
+		if (config.addAll() || config.cameraY())
+		{
+			addLine("Camera Y", client.getCameraY());
+		}
+		if (config.addAll() || config.cameraZ())
+		{
+			addLine("Camera Z", client.getCameraZ());
+		}
 		if (config.addAll() || config.cameraZoom())
 		{
 			addLine("Camera zoom", client.getScale());
