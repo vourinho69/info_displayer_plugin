@@ -98,9 +98,17 @@ public class LocationInfoOverlay extends OverlayPanel
 		{
 			addLine("Camera zoom", client.getScale());
 		}
+		if (config.addAll() || config.cameraYaw())
+		{
+			addLine("Camera yaw", client.getCameraYaw());
+		}
 		if (config.addAll() || config.cameraYawDegrees())
 		{
 			addLine("Lateral rotation", toYawDegrees(client.getCameraYaw()), " deg");
+		}
+		if (config.addAll() || config.cameraPitch())
+		{
+			addLine("Camera pitch", client.getCameraPitch());
 		}
 		if (config.addAll() || config.cameraPitchDegrees())
 		{

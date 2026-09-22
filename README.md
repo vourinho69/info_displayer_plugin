@@ -2,7 +2,7 @@
 
 QOL and Camera Info is a RuneLite external plugin that displays the local
 player's world X, Y, and plane coordinates; camera X, Y, Z, and zoom values;
-and camera rotation in degrees.
+raw camera yaw and pitch; and camera rotation in degrees.
 
 Each value has its own setting. Disable **Names** to display values without
 labels, or enable **Add all** to show every value without changing **Names**.

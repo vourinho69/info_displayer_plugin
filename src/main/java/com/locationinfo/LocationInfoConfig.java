@@ -16,16 +16,16 @@ public interface LocationInfoConfig extends Config
 	String CAMERA_POSITION_Z_KEY = "cameraPositionZ";
 
 	// Each default method represents one setting in RuneLite's plugin panel.
-	@ConfigItem(keyName = "names", name = "Names", description = "Show labels next to coordinate values")
-	default boolean names()
-	{
-		return true;
-	}
-
 	@ConfigItem(keyName = "addAll", name = "Add all", description = "Show every value, regardless of its individual setting")
 	default boolean addAll()
 	{
 		return false;
+	}
+
+	@ConfigItem(keyName = "names", name = "Names", description = "Show labels next to coordinate values")
+	default boolean names()
+	{
+		return true;
 	}
 
 	@ConfigItem(keyName = "playerX", name = "Player X", description = "Show the player's world X coordinate")
@@ -70,8 +70,20 @@ public interface LocationInfoConfig extends Config
 		return true;
 	}
 
+	@ConfigItem(keyName = "cameraYaw", name = "Camera yaw", description = "Show the raw camera yaw value")
+	default boolean cameraYaw()
+	{
+		return true;
+	}
+
 	@ConfigItem(keyName = "cameraYawDegrees", name = "Lateral rotation", description = "Show the camera's yaw rotation in degrees")
 	default boolean cameraYawDegrees()
+	{
+		return true;
+	}
+
+	@ConfigItem(keyName = "cameraPitch", name = "Camera pitch", description = "Show the raw camera pitch value")
+	default boolean cameraPitch()
 	{
 		return true;
 	}
