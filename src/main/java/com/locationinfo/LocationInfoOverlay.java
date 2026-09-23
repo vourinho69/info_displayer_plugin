@@ -9,8 +9,11 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import javax.inject.Inject;
 import net.runelite.api.Client;
+import net.runelite.api.GameState;
+import net.runelite.api.WorldView;
 import net.runelite.api.MenuAction;
 import net.runelite.api.MenuEntry;
+import net.runelite.api.NPC;
 import net.runelite.api.Player;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.client.ui.overlay.OverlayLayer;
@@ -63,7 +66,7 @@ public class LocationInfoOverlay extends OverlayPanel
 		panelComponent.setBorder(new Rectangle());
 		panelComponent.setGap(new Point(0, 2));
 		Player player = client.getLocalPlayer();
-		if (player == null)
+		if (player == null || client.getGameState() != GameState.LOGGED_IN)
 		{
 			// There is no world location to show before a local player exists.
 			return null;
@@ -104,7 +107,7 @@ public class LocationInfoOverlay extends OverlayPanel
 		}
 		if (config.addAll() || config.cameraYawDegrees())
 		{
-			addLine("Lateral rotation", toYawDegrees(client.getCameraYaw()), " deg");
+			addLine("Horizontal rotation", toYawDegrees(client.getCameraYaw()), " deg");
 		}
 		if (config.addAll() || config.cameraPitch())
 		{
@@ -112,7 +115,18 @@ public class LocationInfoOverlay extends OverlayPanel
 		}
 		if (config.addAll() || config.cameraPitchDegrees())
 		{
-			addLine("Horizontal rotation", toPitchDegrees(client.getCameraPitch()), " deg");
+			addLine("Vertical rotation", toPitchDegrees(client.getCameraPitch()), " deg");
+		}
+		WorldView worldView = client.getTopLevelWorldView();
+		boolean supportedScene = worldView != null && !worldView.isInstance()
+			&& player.getWorldView() == worldView;
+		if (config.addAll() || config.sceneBaseX())
+		{
+			addLine("Scene base X", supportedScene ? worldView.getBaseX() : -1);
+		}
+		if (config.addAll() || config.sceneBaseY())
+		{
+			addLine("Scene base Y", supportedScene ? worldView.getBaseY() : -1);
 		}
 		if (config.clickPrediction())
 		{
@@ -120,12 +134,59 @@ public class LocationInfoOverlay extends OverlayPanel
 			// is a walk, cancel, unknown action, or an open context menu.
 			panelComponent.getChildren().add(new ClickStatusComponent(isActionHover()));
 		}
+		if (config.addAll() || config.hoveredEntityId())
+		{
+			addLine("Hovered ID", getHoveredEntityId());
+		}
 		if (config.lastClickStatus())
 		{
 			panelComponent.getChildren().add(new ClickStatusComponent(lastClickWasRed));
 		}
 
 		return super.render(graphics);
+	}
+
+	private int getHoveredEntityId()
+	{
+		if (client.isMenuOpen())
+		{
+			return -1;
+		}
+
+		MenuEntry[] entries = client.getMenu().getMenuEntries();
+		for (int i = entries.length - 1; i >= 0; i--)
+		{
+			MenuEntry entry = entries[i];
+			switch (entry.getType())
+			{
+				case NPC_FIRST_OPTION:
+				case NPC_SECOND_OPTION:
+				case NPC_THIRD_OPTION:
+				case NPC_FOURTH_OPTION:
+				case NPC_FIFTH_OPTION:
+				case WIDGET_TARGET_ON_NPC:
+				case ITEM_USE_ON_NPC:
+				case EXAMINE_NPC:
+					NPC npc = entry.getNpc();
+					if (npc != null)
+					{
+						return npc.getId();
+					}
+					break;
+				case GAME_OBJECT_FIRST_OPTION:
+				case GAME_OBJECT_SECOND_OPTION:
+				case GAME_OBJECT_THIRD_OPTION:
+				case GAME_OBJECT_FOURTH_OPTION:
+				case GAME_OBJECT_FIFTH_OPTION:
+				case WIDGET_TARGET_ON_GAME_OBJECT:
+				case ITEM_USE_ON_GAME_OBJECT:
+				case EXAMINE_OBJECT:
+					return entry.getIdentifier();
+				default:
+					break;
+			}
+		}
+		return -1;
 	}
 
 	private boolean isActionHover()
