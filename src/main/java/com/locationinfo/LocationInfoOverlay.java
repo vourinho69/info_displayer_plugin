@@ -45,6 +45,8 @@ public class LocationInfoOverlay extends OverlayPanel
 	private final LocationInfoConfig config;
 	// Updated by the plugin event handler and retained until the next click occurs.
 	private boolean lastClickWasRed;
+	// Current modal parent group only; zero means no modal interface is open.
+	private int currentModalInterfaceId;
 
 	@Inject
 	private LocationInfoOverlay(Client client, LocationInfoConfig config)
@@ -142,6 +144,10 @@ public class LocationInfoOverlay extends OverlayPanel
 		{
 			panelComponent.getChildren().add(new ClickStatusComponent(lastClickWasRed));
 		}
+		if (config.addAll() || config.currentModalInterface())
+		{
+			addLine("Modal UI", currentModalInterfaceId);
+		}
 
 		return super.render(graphics);
 	}
@@ -212,6 +218,11 @@ public class LocationInfoOverlay extends OverlayPanel
 	{
 		// Save the result separately from hover state, which can change each frame.
 		lastClickWasRed = isRedClick(action);
+	}
+
+	void setCurrentModalInterfaceId(int groupId)
+	{
+		currentModalInterfaceId = groupId;
 	}
 
 	private static boolean isRedClick(MenuAction action)

@@ -37,7 +37,7 @@ public interface LocationInfoConfig extends Config
 
 	@ConfigSection(
 		name = "Debugging",
-		description = "Raw camera, scene origin, and clicking diagnostics",
+		description = "Game-state diagnostics for learning and plugin development",
 		position = 10,
 		closedByDefault = true
 	)
@@ -166,6 +166,14 @@ public interface LocationInfoConfig extends Config
 	@ConfigItem(keyName = "lastClickStatus", name = "Last click status", position = 20, section = DEBUGGING_SECTION,
 		description = "Show whether the last click was an action")
 	default boolean lastClickStatus()
+	{
+		return true;
+	}
+
+	@ConfigItem(keyName = "currentModalInterface", name = "Modal UI", position = 21,
+		section = DEBUGGING_SECTION,
+		description = "Show the currently open modal-interface parent group ID; 0 means none")
+	default boolean currentModalInterface()
 	{
 		return true;
 	}

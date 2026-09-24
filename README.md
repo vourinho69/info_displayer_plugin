@@ -1,8 +1,15 @@
 # QOL and Camera Info
 
-QOL and Camera Info is a RuneLite external plugin that displays the local
-player's world X, Y, and plane coordinates; camera X, Y, Z, and zoom values;
-raw camera yaw and pitch; camera rotation in degrees; and scene origin X/Y tiles.
+QOL and Camera Info is a prototype game-state inspection aid. Its main utility
+is displaying the local player's world coordinates and camera position, zoom,
+and rotation so players can better understand what is happening in their game
+and make more informed gameplay decisions.
+
+Its additional diagnostics provide visible reference data for learning the
+RuneLite API and debugging the behavior of other plugins. It does not inspect or
+modify other plugins; it exposes selected client state that developers can use
+to compare against their own plugin behavior. The project is also part of the
+author's effort to grow into writing complete, production-focused plugins.
 
 **Scene base X/Y** use RuneLite's [WorldView origin](https://static.runelite.net/runelite-api/apidocs/net/runelite/api/WorldView.html).
 They display `-1` in instances or unsupported sub-worldviews. The overlay is
@@ -28,6 +35,11 @@ hovered or while the right-click menu is open.
 
 The plugin only observes existing client state. It does not add, remove, or
 change menu entries, and it does not inject input.
+
+The **Modal UI** debugging value shows the parent group ID of the modal interface
+that is open right now, such as a bank or dialogue. It returns to `0` as soon as
+no modal interface is open. It does not retain interface history or read chat
+messages, senders, widget text, or interface contents.
 
 ## Run locally
 
