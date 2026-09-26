@@ -23,7 +23,7 @@ import net.runelite.client.ui.overlay.OverlayManager;
  * only observes RuneLite events and supplies data to the overlay.
  */
 @PluginDescriptor(
-	name = "QOL and Camera Info",
+	name = "Player and Camera Info - QOL",
 	description = "Game-state inspection aid for gameplay understanding and plugin debugging"
 )
 public class LocationInfoPlugin extends Plugin

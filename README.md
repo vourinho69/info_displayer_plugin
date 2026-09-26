@@ -1,6 +1,6 @@
-# QOL and Camera Info
+# Player and Camera Info - QOL
 
-QOL and Camera Info is a prototype game-state inspection aid. Its main utility
+Player and Camera Info - QOL is a prototype game-state inspection aid. Its main utility
 is displaying the local player's world coordinates and camera position, zoom,
 and rotation so players can better understand what is happening in their game
 and make more informed gameplay decisions.
@@ -43,5 +43,5 @@ messages, senders, widget text, or interface contents.
 
 ## Run locally
 
-Run `gradlew.bat run` from the project directory, then enable **QOL and Camera Info**
+Run `gradlew.bat run` from the project directory, then enable **Player and Camera Info - QOL**
 in the RuneLite plugin list.
